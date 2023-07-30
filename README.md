@@ -42,6 +42,25 @@ For production release:
 
 ```
 
+#### Starting the software
+
+For starting the software:
+
+```sh
+./mgmtcli
+```
+
+For example:
+
+```sh
+[mgmtcli] $ ?
+-- Help
+      exit  Exit interpreter
+
+[mgmtcli] $ exit
+
+```
+
 ## References
 [LLDP](https://github.com/lldpd/lldpd)
 [GNU readline](https://web.mit.edu/gnu/doc/html/rlman_toc.html#SEC21)
