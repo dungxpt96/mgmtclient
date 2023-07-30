@@ -1,6 +1,5 @@
-/* -*- mode: c; c-file-style: "openbsd" -*- */
 /*
- * Copyright (c) 2008 Vincent Bernat <bernat@luffy.cx>
+ * Copyright (c) 2023 Bernard Nguyen <dungxpt96@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -82,7 +81,6 @@ cmd_exit(struct mgmtctl_conn_t *conn, struct writer *w,
 	return 1;
 }
 
-#ifdef HAVE_LIBREADLINE
 static int
 _cmd_complete(int all)
 {
@@ -131,18 +129,6 @@ cmd_help(int count, int ch)
 {
 	return _cmd_complete(1);
 }
-#else
-static char*
-readline(const char *p)
-{
-	static char line[2048];
-	fprintf(stderr, "%s", p);
-	fflush(stderr);
-	if (fgets(line, sizeof(line) - 2, stdin) == NULL)
-		return NULL;
-	return strdup(line);
-}
-#endif
 
 /**
  * Execute a tokenized command and display its output.
@@ -252,10 +238,9 @@ main(int argc, char *argv[])
 	log_debug("mgmtctl", "connect to mgmtd");
 
 	/* Interactive session */
-#ifdef HAVE_LIBREADLINE
 	rl_bind_key('?',  cmd_help);
 	rl_bind_key('\t', cmd_complete);
-#endif
+
 	char *line = NULL;
 	do {
 		if ((line = readline(prompt()))) {

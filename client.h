@@ -19,7 +19,6 @@
 
 #include "writer.h"
 #include "log.h"
-#include "config.h"
 #include "compat/compat.h"
 
 #ifdef HAVE_ADDRESS_SANITIZER
