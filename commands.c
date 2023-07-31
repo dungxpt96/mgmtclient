@@ -692,3 +692,20 @@ cmd_store_something_env_value(const char *what,
 {
 	return (cmdenv_put(env, what, value) != -1);
 }
+
+/**
+ * Restrict the command to some ports.
+ */
+void
+cmd_restrict_ports(struct cmd_node *root)
+{
+	/* Restrict to some ports. */
+	commands_new(
+		commands_new(root,
+		    "interface",
+		    "Restrict configuration to a interface",
+		    cmd_check_no_env, NULL, "interface"),
+		NULL,
+		"Restrict configuration to the specified interface",
+		NULL, cmd_store_env_value_and_pop2, "interface");
+}

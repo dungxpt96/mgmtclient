@@ -200,6 +200,10 @@ static struct cmd_node*
 register_commands()
 {
 	root = commands_root();
+
+	register_commands_show(root);
+	register_commands_configure(root);
+
 	commands_new(
 		commands_new(root, "exit", "Exit interpreter", NULL, NULL, NULL),
 		NEWLINE, "Exit interpreter", NULL, cmd_exit, NULL);
@@ -245,6 +249,9 @@ main(int argc, char *argv[])
 	do {
 		if ((line = readline(prompt()))) {
 			int n = parse_and_exec(fmt, line);
+			if (n != 0) {
+				add_history(line);
+			}
 			free(line);
 		}
 	} while (!must_exit && line != NULL);

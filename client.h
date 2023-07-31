@@ -33,6 +33,15 @@ extern const char *ctlname;
 /* commands.c */
 #define NEWLINE "<CR>"
 
+enum daemons
+{
+    DAEMON_MIN = 0,
+
+    DAEMON_FREQUENCY_SYNCHRONIZATION = DAEMON_MIN,
+
+    DAEMON_MAX
+};
+
 struct cmd_node;
 struct cmd_env;
 
@@ -87,6 +96,14 @@ int cmd_store_something_env_value_and_pop2(const char *, struct cmd_env *,
     void *);
 int cmd_store_something_env_value(const char *, struct cmd_env *,
     void *);
+
+void cmd_restrict_ports(struct cmd_node *);
+
+/* show.c */
+void register_commands_show(struct cmd_node *);
+
+/* configure.c */
+void register_commands_configure(struct cmd_node *);
 
 /* tokenizer.c */
 int tokenize_line(const char*, int*, char***);
