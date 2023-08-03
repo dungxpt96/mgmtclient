@@ -18,27 +18,35 @@
 #include <limits.h>
 
 #include "show.h"
+#include "display.h"
 
 static int
-cmd_show_freq_sync_interface(struct writer *w,
+cmd_show_freq_sync_interface_spec(struct writer *w,
     struct cmd_env *env, void *arg)
 {
+	if (cmdenv_get(env, "interface"))
+		log_info("mgmtctl", "restrict to the following ports: %s",
+		    cmdenv_get(env, "interface"));
+
+
+	display_freq_sync_interface_spec(w, env);
 
     return 1;
 }
 
 static int
-cmd_show_freq_sync_interface_all(struct writer *w,
+cmd_show_freq_sync_interfaces_all(struct writer *w,
     struct cmd_env *env, void *arg)
 {
-
+	display_freq_sync_interfaces_all(w, env);
     return 1;
 }
 
 static int
-cmd_show_freq_sync_interface_brief(struct writer *w,
+cmd_show_freq_sync_interfaces_brief(struct writer *w,
     struct cmd_env *env, void *arg)
 {
+	display_freq_sync_interfaces_brief(w, env);
 
     return 1;
 }
@@ -46,13 +54,13 @@ cmd_show_freq_sync_interface_brief(struct writer *w,
 static void _register_freq_sync_commands_show(struct cmd_node *root)
 {
     /* show frequency synchronization interface */
-	cmd_restrict_ports(root);
-
 	commands_new(
 		root,
 		NEWLINE,
 		"Show frequency synchronization interface information",
-		cmd_check_env, cmd_show_freq_sync_interface, "interface");
+		cmd_check_env, cmd_show_freq_sync_interface_spec, "interface");
+
+	cmd_restrict_ports(root);
 
     struct cmd_node *interfaces = commands_new(
 		root,
@@ -64,7 +72,7 @@ static void _register_freq_sync_commands_show(struct cmd_node *root)
 		interfaces,
 		NEWLINE,
 		"Show frequency synchronization interface information",
-		NULL, cmd_show_freq_sync_interface_all, NULL);
+		NULL, cmd_show_freq_sync_interfaces_all, NULL);
 
     /* show frequency synchronization interface brief */
     struct cmd_node *interface_brief = commands_new(
@@ -77,7 +85,7 @@ static void _register_freq_sync_commands_show(struct cmd_node *root)
 		interface_brief,
 		NEWLINE,
 		"Show brief interface information",
-		NULL, cmd_show_freq_sync_interface_brief, NULL);
+		NULL, cmd_show_freq_sync_interfaces_brief, NULL);
 }
 
 void register_freq_sync_commands_show(struct cmd_node *root)

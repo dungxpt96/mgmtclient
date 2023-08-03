@@ -5,14 +5,21 @@ COMPAT = compat
 DAEMON = daemon
 
 FREQ_SYNC = $(DAEMON)/frequency_synchronization
+
 FREQ_SYNC_SHOW = $(FREQ_SYNC)/show
 FREQ_SYNC_CONF = $(FREQ_SYNC)/configure
 
+FREQ_SYNC_SHOW_HDRS = $(FREQ_SYNC_SHOW)/*.h
+FREQ_SYNC_SHOW_OBJS = $(FREQ_SYNC_SHOW)/show.o $(FREQ_SYNC_SHOW)/display.o 
+
+FREQ_SYNC_CONF_HDRS = $(FREQ_SYNC_CONF)/*.h
+FREQ_SYNC_CONF_OBJS = $(FREQ_SYNC_CONF)/configure.o
+
+FREQ_SYNC_HDRS = $(FREQ_SYNC_SHOW_HDRS)  $(FREQ_SYNC_CONF_HDRS)
+FREQ_SYNC_OBJS = $(FREQ_SYNC_SHOW_OBJS)  $(FREQ_SYNC_CONF_OBJS)
+
 COMPAT_HDRS = $(COMPAT)/compat.h
 COMPAT_OBJS = $(COMPAT)/strlcpy.o
-
-FREQ_SYNC_HDRS = $(FREQ_SYNC_SHOW)/*.h  $(FREQ_SYNC_CONF)/*.h
-FREQ_SYNC_OBJS = $(FREQ_SYNC_SHOW)/show.o  $(FREQ_SYNC_CONF)/configure.o
 
 MGMT_CLIENT_HDRS = client.h
 MGMT_CLIENT_OBJS = log.o mgmtcli.o commands.o text_writer.o tokenizer.o misc.o show.o configure.o
