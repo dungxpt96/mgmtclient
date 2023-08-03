@@ -45,6 +45,7 @@ extern const char	*__progname;
 /* Global for completion */
 static struct cmd_node *root = NULL;
 const char *ctlname = NULL;
+char hostname[256] = "mgmtcli";
 
 static int
 is_privileged()
@@ -59,11 +60,17 @@ static char*
 prompt()
 {
 #define CESC "\033"
+	static char hostname_priv[256] = {0};
+
 	int privileged = is_privileged();
 	if (isatty(STDIN_FILENO)) {
-		if (privileged)
-			return "[mgmtcli] # ";
-		return "[mgmtcli] $ ";
+		if (privileged) {
+			sprintf(hostname_priv, "%s # ", hostname);
+			return hostname_priv;
+		}
+
+		sprintf(hostname_priv, "%s $ ", hostname);
+		return hostname_priv;
 	}
 	return "";
 }

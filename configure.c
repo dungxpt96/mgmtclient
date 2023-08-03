@@ -20,6 +20,8 @@
 
 #include "daemon/frequency_synchronization/configure/configure.h"
 
+extern char hostname[256];
+
 struct register_command_s
 {
     int daemon;
@@ -41,6 +43,36 @@ static void register_daemon_commands_configure(struct cmd_node *root)
     }
 }
 
+static int
+cmd_configure_hostname(struct writer *w,
+    struct cmd_env *env, void *arg)
+{
+	strcpy(hostname, cmdenv_get(env, "hostname"));
+
+    return 1;
+}
+
+static void _register_configure_hostname(struct cmd_node *root)
+{
+	struct cmd_node *hostname = commands_new(
+		root,
+		"hostname",
+		"Hostname of the host",
+		NULL, NULL, NULL);
+
+	commands_new(
+		hostname,
+		NULL,
+		"Hostname of the host",
+		NULL, cmd_store_env_value_and_pop, "hostname");
+
+	commands_new(
+		hostname,
+		NEWLINE,
+		"Hostname of the host",
+		cmd_check_env, cmd_configure_hostname, "hostname");
+}
+
 void register_commands_configure(struct cmd_node *root)
 {
 	struct cmd_node *configure = commands_new(
@@ -57,4 +89,6 @@ void register_commands_configure(struct cmd_node *root)
 
     register_daemon_commands_configure(configure);
     register_daemon_commands_configure(unconfigure);
+
+    _register_configure_hostname(configure);
 }
