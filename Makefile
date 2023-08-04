@@ -4,39 +4,60 @@ LDFLAGS += -pthread -g -lreadline
 COMPAT = compat
 DAEMON = daemon
 
-FREQ_SYNC = $(DAEMON)/frequency_synchronization
+LIB = lib
+
+LIB_HDRS = $(LIB)/*.h
+LIB_SRCS =  $(shell ls $(LIB)/*.c)
+LIB_OBJS = $(LIB_SRCS:.c=.o)
+
+FREQ_SYNC = $(DAEMON)/freqsync
 
 FREQ_SYNC_SHOW = $(FREQ_SYNC)/show
 FREQ_SYNC_CONF = $(FREQ_SYNC)/configure
 
+FREQ_SYNC_GLOB_HDRS = $(FREQ_SYNC)/*.h
+FREQ_SYNC_GLOB_SRCS = $(shell ls $(FREQ_SYNC)/freqsync*.c)
+FREQ_SYNC_GLOB_OBJS = $(FREQ_SYNC_GLOB_SRCS:.c=.o)
+
 FREQ_SYNC_SHOW_HDRS = $(FREQ_SYNC_SHOW)/*.h
-FREQ_SYNC_SHOW_OBJS = $(FREQ_SYNC_SHOW)/show.o $(FREQ_SYNC_SHOW)/display.o 
+FREQ_SYNC_SHOW_SRCS = $(shell ls $(FREQ_SYNC_SHOW)/freqsync*.c)
+FREQ_SYNC_SHOW_OBJS = $(FREQ_SYNC_SHOW_SRCS:.c=.o)
 
 FREQ_SYNC_CONF_HDRS = $(FREQ_SYNC_CONF)/*.h
-FREQ_SYNC_CONF_OBJS = $(FREQ_SYNC_CONF)/configure.o
+FREQ_SYNC_CONF_SRCS = $(shell ls $(FREQ_SYNC_CONF)/freqsync*.c)
+FREQ_SYNC_CONF_OBJS = $(FREQ_SYNC_CONF_SRCS:.c=.o)
 
-FREQ_SYNC_HDRS = $(FREQ_SYNC_SHOW_HDRS)  $(FREQ_SYNC_CONF_HDRS)
-FREQ_SYNC_OBJS = $(FREQ_SYNC_SHOW_OBJS)  $(FREQ_SYNC_CONF_OBJS)
+FREQ_SYNC_HDRS = $(FREQ_SYNC_SHOW_HDRS)  $(FREQ_SYNC_CONF_HDRS) $(FREQ_SYNC_GLOB_HDRS)
+FREQ_SYNC_OBJS = $(FREQ_SYNC_SHOW_OBJS)  $(FREQ_SYNC_CONF_OBJS) $(FREQ_SYNC_GLOB_OBJS)
 
 COMPAT_HDRS = $(COMPAT)/compat.h
 COMPAT_OBJS = $(COMPAT)/strlcpy.o
 
 MGMT_CLIENT_HDRS = client.h
-MGMT_CLIENT_OBJS = log.o mgmtcli.o commands.o text_writer.o tokenizer.o misc.o show.o configure.o
+MGMT_CLIENT_OBJS = log.o commands.o text_writer.o tokenizer.o misc.o show.o configure.o
 
-HDRS = $(FREQ_SYNC_HDRS) $(COMPAT_HDRS) $(MGMT_CLIENT_HDRS)
-OBJS = $(FREQ_SYNC_OBJS) $(COMPAT_OBJS) $(MGMT_CLIENT_OBJS)
+APP_OBJS = mgmtcli.o
+
+HDRS = $(LIB_HDRS) $(FREQ_SYNC_HDRS) $(COMPAT_HDRS) $(MGMT_CLIENT_HDRS)
+OBJS = $(LIB_OBJS) $(FREQ_SYNC_OBJS) $(COMPAT_OBJS) $(MGMT_CLIENT_OBJS)
 
 APP = mgmtclient
 
-all: $(APP)
+all: $(APP) test_server
 
-$(APP): $(HDRS) $(OBJS)
+$(APP): $(HDRS) $(OBJS) $(APP_OBJS)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+test_server: test_server.o $(HDRS) $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY: clean
+
 clean:
-	$(RM) $(COMPAT_OBJS) $(FREQ_SYNC_OBJS) *.o *~ $(APP)
+	$(RM) $(OBJS) $(APP_OBJS) *~
+
+distclean: clean
+	$(RM) $(APP) test_server

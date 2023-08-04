@@ -17,11 +17,15 @@
 #include <string.h>
 #include <limits.h>
 
-#include "show.h"
-#include "display.h"
+#include "../../../lib/message.h"
+
+#include "../freqsync_message.h"
+
+#include "freqsync_show.h"
+#include "freqsync_display.h"
 
 static int
-cmd_show_freq_sync_interface_spec(struct writer *w,
+cmd_show_freq_sync_interface_spec(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 	if (cmdenv_get(env, "interface"))
@@ -35,7 +39,7 @@ cmd_show_freq_sync_interface_spec(struct writer *w,
 }
 
 static int
-cmd_show_freq_sync_interfaces_all(struct writer *w,
+cmd_show_freq_sync_interfaces_all(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 	display_freq_sync_interfaces_all(w, env);
@@ -43,10 +47,11 @@ cmd_show_freq_sync_interfaces_all(struct writer *w,
 }
 
 static int
-cmd_show_freq_sync_interfaces_brief(struct writer *w,
+cmd_show_freq_sync_interfaces_brief(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 	display_freq_sync_interfaces_brief(w, env);
+	freqsync_message_send_interfaces_brief(conn);
 
     return 1;
 }

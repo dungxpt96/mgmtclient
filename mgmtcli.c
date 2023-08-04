@@ -34,6 +34,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#include "lib/connection.h"
+#include "lib/ctrl.h"
+#include "daemon/freqsync/freqsync_message.h"
+
 #include "client.h"
 
 #ifdef HAVE___PROGNAME
@@ -147,7 +151,7 @@ cmd_help(int count, int ch)
  * @return 0 if an error occurred, 1 otherwise
  */
 static int
-cmd_exec(const char *fmt, int argc, const char **argv)
+cmd_exec(connection_t *conn, const char *fmt, int argc, const char **argv)
 {
 	/* Init output formatter */
 	struct writer *w;
@@ -161,7 +165,7 @@ cmd_exec(const char *fmt, int argc, const char **argv)
 	}
 
 	/* Execute command */
-	int rc = commands_execute(w,
+	int rc = commands_execute(conn, w,
 	    root, argc, argv, is_privileged());
 	if (rc != 0) {
 		log_info("mgmtctl", "an error occurred while executing last command");
@@ -181,7 +185,7 @@ cmd_exec(const char *fmt, int argc, const char **argv)
  * @return -1 if an error occurred, 0 if nothing was executed. 1 otherwise.
  */
 static int
-parse_and_exec(const char *fmt, const char *line)
+parse_and_exec(connection_t *conn, const char *fmt, const char *line)
 {
 	int cargc = 0; char **cargv = NULL;
 	int n;
@@ -196,7 +200,7 @@ parse_and_exec(const char *fmt, const char *line)
 		return -1;
 	}
 	if (cargc != 0)
-		n = cmd_exec(fmt, cargc, (const char **)cargv);
+		n = cmd_exec(conn, fmt, cargc, (const char **)cargv);
 	tokenize_free(cargc, cargv);
 	return (cargc == 0)?0:
 	    (n == 0)?-1:
@@ -236,6 +240,7 @@ main(int argc, char *argv[])
 	int rc = EXIT_FAILURE;
 	int n;
 	const char *fmt = "plain";
+	connection_t *client_conn = NULL;
 
 	signal(SIGHUP, SIG_IGN);
 
@@ -245,6 +250,11 @@ main(int argc, char *argv[])
 	/* Register commands */
 	root = register_commands();
 
+	client_conn = connection_create();
+
+#if defined (FREQSYNC_MESSAGE_SUPPORTED)
+	freqsync_message_register(client_conn);
+#endif 
 	/* Make a connection */
 	log_debug("mgmtctl", "connect to mgmtd");
 
@@ -255,7 +265,7 @@ main(int argc, char *argv[])
 	char *line = NULL;
 	do {
 		if ((line = readline(prompt()))) {
-			int n = parse_and_exec(fmt, line);
+			int n = parse_and_exec(client_conn, fmt, line);
 			if (n != 0) {
 				add_history(line);
 			}
@@ -266,5 +276,6 @@ main(int argc, char *argv[])
 
 end:
 	if (root) commands_free(root);
+	connection_release(client_conn);
 	return rc;
 }

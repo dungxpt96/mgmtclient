@@ -82,7 +82,7 @@ struct cmd_node {
 	 *
 	 * This function can alter the environment
 	 */
-	int(*execute)(struct writer*,
+	int(*execute)(connection_t *conn, struct writer*,
 	    struct cmd_env*, void *);
 	void *arg;		/**< Magic argument for the previous two functions */
 
@@ -161,7 +161,7 @@ struct cmd_node*
 commands_new(struct cmd_node *root,
     const char *token, const char *doc,
     int(*validate)(struct cmd_env*, void *),
-    int(*execute)(struct writer*,
+    int(*execute)(connection_t *conn, struct writer*,
 	struct cmd_env*, void *),
     void *arg)
 {
@@ -355,7 +355,7 @@ struct candidate_word {
  * @return 0 on success, -1 otherwise.
  */
 static int
-_commands_execute(struct writer *w,
+_commands_execute(connection_t *conn, struct writer *w,
     struct cmd_node *root, int argc, const char **argv,
     char **word, int all, int priv)
 {
@@ -444,7 +444,7 @@ _commands_execute(struct writer *w,
 		/* Push and execute */
 		cmdenv_push(&env, best);
 		if (best->execute) {
-			rc = best->execute(w, &env, best->arg) != 1 ? -1 : rc;
+			rc = best->execute(conn, w, &env, best->arg) != 1 ? -1 : rc;
 			if (rc == -1) goto end;
 		}
 		env.argp++;
@@ -559,7 +559,7 @@ commands_complete(struct cmd_node *root, int argc, const char **argv,
     int all, int privileged)
 {
 	char *word = NULL;
-	if (_commands_execute(NULL, root, argc, argv,
+	if (_commands_execute(NULL, NULL, root, argc, argv,
 		&word, all, privileged) == 0)
 		return word;
 	return NULL;
@@ -569,10 +569,10 @@ commands_complete(struct cmd_node *root, int argc, const char **argv,
  * Execute the given commands.
  */
 int
-commands_execute(struct writer *w,
+commands_execute(connection_t *conn, struct writer *w,
     struct cmd_node *root, int argc, const char **argv, int privileged)
 {
-	return _commands_execute(w, root, argc, argv, NULL, 0, privileged);
+	return _commands_execute(conn, w, root, argc, argv, NULL, 0, privileged);
 }
 
 /**

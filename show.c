@@ -18,7 +18,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "daemon/frequency_synchronization/show/show.h"
+#include "daemon/freqsync/show/freqsync_show.h"
 
 struct register_command_s
 {

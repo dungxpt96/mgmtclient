@@ -18,7 +18,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "daemon/frequency_synchronization/configure/configure.h"
+#include "daemon/freqsync/configure/freqsync_configure.h"
 
 extern char hostname[256];
 

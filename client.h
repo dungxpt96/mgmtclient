@@ -17,6 +17,8 @@
 #ifndef _CLIENT_H
 #define _CLIENT_H
 
+#include "lib/connection.h"
+
 #include "writer.h"
 #include "log.h"
 #include "compat/compat.h"
@@ -52,7 +54,7 @@ struct cmd_node *commands_new(
 	const char *,
 	const char *,
 	int(*validate)(struct cmd_env*, void *),
-	int(*execute)(struct writer*,
+	int(*execute)(connection_t *, struct writer*,
 	    struct cmd_env*, void *),
 	void *);
 
@@ -71,7 +73,7 @@ int cmdenv_put(struct cmd_env*, const char*, const char*);
 
 int cmdenv_pop(struct cmd_env*, int);
 
-int commands_execute(struct writer *,
+int commands_execute(connection_t *conn, struct writer *,
     struct cmd_node *, int, const char **, int);
 
 char *commands_complete(struct cmd_node *, int, const char **,

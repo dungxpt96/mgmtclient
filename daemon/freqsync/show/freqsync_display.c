@@ -17,7 +17,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "display.h"
+#include "freqsync_display.h"
 /*  ----------------------------------------------------------------------------- */
 static void
 _display_freq_sync_interface(struct writer *w,

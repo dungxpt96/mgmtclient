@@ -17,10 +17,10 @@
 #include <string.h>
 #include <limits.h>
 
-#include "configure.h"
+#include "freqsync_configure.h"
 
 static int
-cmd_configure_freq_sync(struct writer *w,
+cmd_configure_freq_sync(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 
@@ -28,7 +28,7 @@ cmd_configure_freq_sync(struct writer *w,
 }
 
 static int
-cmd_show_freq_sync_interface(struct writer *w,
+cmd_configure_freq_sync_quality_opt1(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 
@@ -36,7 +36,7 @@ cmd_show_freq_sync_interface(struct writer *w,
 }
 
 static int
-cmd_show_freq_sync_interface_brief(struct writer *w,
+cmd_configure_freq_sync_quality_opt2gen1(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 
@@ -44,23 +44,7 @@ cmd_show_freq_sync_interface_brief(struct writer *w,
 }
 
 static int
-cmd_configure_freq_sync_quality_opt1(struct writer *w,
-    struct cmd_env *env, void *arg)
-{
-
-    return 1;
-}
-
-static int
-cmd_configure_freq_sync_quality_opt2gen1(struct writer *w,
-    struct cmd_env *env, void *arg)
-{
-
-    return 1;
-}
-
-static int
-cmd_configure_freq_sync_quality_opt2gen2(struct writer *w,
+cmd_configure_freq_sync_quality_opt2gen2(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 
@@ -71,7 +55,7 @@ cmd_configure_freq_sync_quality_opt2gen2(struct writer *w,
 /* ------------------------ REGISTER COMMANDS --------------------------------------------*/
 /* ---------------------------------------------------------------------------------------*/
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_DNU(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_DNU(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -91,7 +75,7 @@ static void _register_opt1_ql_DNU(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_EEC1(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_EEC1(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -111,7 +95,7 @@ static void _register_opt1_ql_EEC1(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_PRC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_PRC(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -131,7 +115,7 @@ static void _register_opt1_ql_PRC(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_PRTC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_PRTC(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -151,7 +135,7 @@ static void _register_opt1_ql_PRTC(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_SEC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_SEC(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -171,7 +155,7 @@ static void _register_opt1_ql_SEC(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_SSUA(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_SSUA(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -191,7 +175,7 @@ static void _register_opt1_ql_SSUA(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_SSUB(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_SSUB(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -211,7 +195,7 @@ static void _register_opt1_ql_SSUB(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_eEEC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_eEEC(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -231,7 +215,7 @@ static void _register_opt1_ql_eEEC(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_ePRC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_ePRC(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -251,7 +235,7 @@ static void _register_opt1_ql_ePRC(struct cmd_node *root)
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt1_ePRTC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt1_ePRTC(connection_t *conn, struct writer *w,
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -789,6 +773,7 @@ static void _register_opt2gen2_ql_ePRTC(struct cmd_node *root)
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRTC, "interface");
 
 }
+
 
 static void _register_freq_sync_quality_level_opt_1_commands_configure(struct cmd_node *root)
 {
