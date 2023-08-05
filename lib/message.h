@@ -64,4 +64,10 @@ void
 message_set_parser (struct connection_t *conn, int message_type,
                          CONN_PARSER parser);
 
+void
+message_send(struct connection_t *conn, int message_type,
+                         uint16_t len);
+
+void message_recv(struct connection_t *conn);
+
 #endif /* _LIB_DAEMON_CLIENT_ */

@@ -36,19 +36,22 @@ COMPAT_OBJS = $(COMPAT)/strlcpy.o
 MGMT_CLIENT_HDRS = client.h
 MGMT_CLIENT_OBJS = log.o commands.o text_writer.o tokenizer.o misc.o show.o configure.o
 
+MGMT_SERVER_HDRS = mgmt_server.h
+MGMT_SERVER_OBJS = mgmt_server.o
+
 APP_OBJS = mgmtcli.o
 
-HDRS = $(LIB_HDRS) $(FREQ_SYNC_HDRS) $(COMPAT_HDRS) $(MGMT_CLIENT_HDRS)
-OBJS = $(LIB_OBJS) $(FREQ_SYNC_OBJS) $(COMPAT_OBJS) $(MGMT_CLIENT_OBJS)
+HDRS = $(LIB_HDRS) $(FREQ_SYNC_HDRS) $(COMPAT_HDRS) $(MGMT_CLIENT_HDRS) $(MGMT_SERVER_HDRS)
+OBJS = $(LIB_OBJS) $(FREQ_SYNC_OBJS) $(COMPAT_OBJS) $(MGMT_CLIENT_OBJS) $(MGMT_SERVER_OBJS)
 
 APP = mgmtclient
 
-all: $(APP) test_server
+all: $(APP) server
 
 $(APP): $(HDRS) $(OBJS) $(APP_OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-test_server: test_server.o $(HDRS) $(OBJS)
+server: server.o $(HDRS) $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
@@ -57,7 +60,7 @@ test_server: test_server.o $(HDRS) $(OBJS)
 .PHONY: clean
 
 clean:
-	$(RM) $(OBJS) $(APP_OBJS) *~
+	$(RM) $(OBJS) $(APP_OBJS) *~ *.o
 
 distclean: clean
-	$(RM) $(APP) test_server
+	$(RM) $(APP) server

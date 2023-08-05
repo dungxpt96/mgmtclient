@@ -77,3 +77,45 @@ message_set_parser (connection_t *conn, int message_type,
 {
     conn->parser[message_type] = parser;
 }
+
+void message_send(connection_t *conn, int message_type, uint16_t len)
+{
+    struct hmsg_header header;
+    uint16_t size;
+    uint8_t *pnt;
+    int ret;
+    int rc;
+
+    pnt = conn->buf_out;
+    size = MSG_HEADER_SIZE;
+
+    header.type = message_type;
+    header.length = len + MSG_HEADER_SIZE;
+
+    conn->size_out = len + MSG_HEADER_SIZE;
+
+    message_encode_header (&pnt, &size, &header);
+
+    connection_send(conn);
+
+    message_recv(conn);
+
+    connection_close(conn);
+}
+
+void message_recv(connection_t *conn)
+{
+    struct hmsg_header header;
+    int rc;
+
+    rc = connection_needs(conn, MESSAGE_MAX_LEN);
+    
+    message_decode_header (&conn->pnt_in, &conn->size_in, &header);
+
+    printf("Decode header message_type: %d length=%d\n", header.type, header.length);
+
+    if (conn->callback[header.type] != NULL) {
+        (*conn->parser[header.type])(&conn->pnt_in, &conn->size_in, &header,
+                                        conn, conn->callback[header.type]);
+    }
+}

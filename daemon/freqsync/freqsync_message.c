@@ -24,7 +24,7 @@ freqsync_encode_show_interface_brief (uint8_t **pnt, u_int16_t *size)
 {
     uint8_t *sp = *pnt;
 
-    printf("%s: %d\n", __FUNCTION__, __LINE__);
+    //printf("%s: %d\n", __FUNCTION__, __LINE__);
 
     return *pnt - sp;
 }
@@ -34,7 +34,7 @@ freqsync_decode_show_interface_brief (uint8_t **pnt, u_int16_t *size)
 {
     uint8_t *sp = *pnt;
 
-    printf("%s: %d\n", __FUNCTION__, __LINE__);
+    //printf("%s: %d\n", __FUNCTION__, __LINE__);
 
     return *pnt - sp;
 }
@@ -43,7 +43,7 @@ int
 freqsync_parse_show_interface_brief(uint8_t **pnt, uint16_t *size, struct hmsg_header *header,
                            void *arg, CONN_CALLBACK callback)
 {
-    printf("%s: %d *size=%d\n", __FUNCTION__, __LINE__, *size);
+    //printf("%s: %d *size=%d\n", __FUNCTION__, __LINE__, *size);
 
     freqsync_decode_show_interface_brief(pnt, size);
 
@@ -56,7 +56,7 @@ freqsync_parse_show_interface_brief(uint8_t **pnt, uint16_t *size, struct hmsg_h
 int
 freqsync_callback_show_interface_brief(struct hmsg_header *header, void *arg, void *message)
 {
-    printf("%s: %d\n", __FUNCTION__, __LINE__);
+    //printf("%s: %d\n", __FUNCTION__, __LINE__);
     return 0;
 }
 
@@ -71,48 +71,6 @@ freqsync_message_register(connection_t *conn)
 /* --------------------------------------------------------------------*/
 /* ------------------- Handle specific message ------------------------*/
 /* --------------------------------------------------------------------*/
-
-static void freqsync_message_recv_message(connection_t *conn)
-{
-    struct hmsg_header header;
-    int rc;
-
-    rc = connection_needs(conn, MESSAGE_MAX_LEN);
-    
-    message_decode_header (&conn->pnt_in, &conn->size_in, &header);
-
-    printf("Decode header message_type: %d length=%d\n", header.type, header.length);
-
-    if (conn->callback[header.type] != NULL) {
-        (*conn->parser[header.type])(&conn->pnt_in, &conn->size_in, &header,
-                                        conn, conn->callback[header.type]);
-    }
-}
-
-static void freqsync_message_send_message(connection_t *conn, int message_type, uint16_t len)
-{
-    struct hmsg_header header;
-    uint16_t size;
-    uint8_t *pnt;
-    int ret;
-    int rc;
-
-    pnt = conn->buf_out;
-    size = MSG_HEADER_SIZE;
-
-    header.type = message_type;
-    header.length = len + MSG_HEADER_SIZE;
-
-    conn->size_out = len + MSG_HEADER_SIZE;
-
-    message_encode_header (&pnt, &size, &header);
-
-    connection_send(conn);
-
-    freqsync_message_recv_message(conn);
-
-    connection_close(conn);
-}
 
 void freqsync_message_send_interfaces_brief(connection_t *conn)
 {
@@ -132,7 +90,7 @@ void freqsync_message_send_interfaces_brief(connection_t *conn)
             return nbytes;
     */
 
-   return freqsync_message_send_message(conn,
-                                        FREQSYNC_SHOW_INTERFACE_BRIEF,
-                                        nbytes);
+   return message_send(conn,
+                        FREQSYNC_SHOW_INTERFACE_BRIEF,
+                        nbytes);
 }

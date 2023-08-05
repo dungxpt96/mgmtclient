@@ -14,13 +14,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef _DAEMON_FREQSYNC_MESSAGE_H
-#define _DAEMON_FREQSYNC_MESSAGE_H
+#ifndef _MGMT_SERVER_H
+#define _MGMT_SERVER_H
 
-#include "../../lib/connection.h"
+void mgmt_server_start();
 
-#define FREQSYNC_MESSAGE_SUPPORTED
+void mgmt_server_stop();
 
-void freqsync_message_register(connection_t *conn);
+void mgmt_server_init(void);
 
-#endif /* _DAEMON_FREQSYNC_MESSAGE_H */
+#endif /* _MGMT_SERVER_H */

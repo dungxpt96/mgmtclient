@@ -64,6 +64,8 @@ struct connection_t {
 	/* the Unix-domain socket to connect to daemon */
 	char *ctlname;
 
+    pthread_t thread_id;
+
 	/* Callback handling */
 	connection_recv_callback recv; /* Receive callback */
 	connection_send_callback send; /* Send callback */

@@ -23,6 +23,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/select.h>
 #include <errno.h>
 
 #include "../log.h"
@@ -50,7 +51,7 @@ connection_sync_send(connection_t *connect,
 	struct connection_socker_t *socket = user_data;
 	ssize_t nb;
 
-    printf("===> sending to fd %d with length %ld\n", socket->fd, length);
+    //printf("===> sending to fd %d with length %ld\n", socket->fd, length);
 
 	if (socket->fd == -1 &&
 	    ((socket->fd = connection_sync_connect(connect)) == -1)) {
@@ -62,7 +63,7 @@ connection_sync_send(connection_t *connect,
 		return 1;
 	}
 
-    printf("===> sent to fd %d with nb %ld\n", socket->fd, nb);
+    //printf("===> sent to fd %d with nb %ld\n", socket->fd, nb);
 
 	return nb;
 }
@@ -85,7 +86,7 @@ connection_sync_recv(connection_t *connect,
 		return 1;
 	}
 
-    printf("<=== ready to receive from fd %d with length %ld\n", socket->fd, length);
+    //printf("<=== ready to receive from fd %d with length %ld\n", socket->fd, length);
 
     do {
         //fprintf(stdout, "Receiving buffer from fd %d\n", sockfd);
@@ -118,7 +119,7 @@ connection_sync_recv(connection_t *connect,
         }
     } while (count > 0);
 
-    printf("<=== received from fd %d with length %ld\n", socket->fd, pos);
+    //printf("<=== received from fd %d with length %ld\n", socket->fd, pos);
 
     return pos;
 }   
@@ -165,7 +166,7 @@ connection_t *connection_new_name(const char *ctlname,
     conn->pnt_in = conn->buf_in;
     conn->pnt_out = conn->buf_out;
 
-    printf("Connection name %s is established\n", conn->ctlname);
+    //printf("Connection name %s is established\n", conn->ctlname);
 
 	return conn;
 }

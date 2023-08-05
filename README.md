@@ -33,7 +33,13 @@ sudo apt-get install libreadline-dev
 For building the software:
 
 ```sh
-make clean; make
+make distclean; make
+```
+or we can build the separated binary for `mgmtcli` and `server`
+```
+make distclean
+make server
+make mgmtcli
 ```
 
 For production release:
@@ -47,18 +53,33 @@ For production release:
 For starting the software:
 
 ```sh
-./mgmtcli
+mgmtcli
+```
+TESTING: Starting server to receive messages from `mgmtcli`
+```sh
+server
 ```
 
 For example:
 
 ```sh
-[mgmtcli] $ ?
 -- Help
-      exit  Exit interpreter
+       show  Show running system information
+  configure  Change system settings
+unconfigure  Unconfigure system settings
+       exit  Exit interpreter
 
-[mgmtcli] $ exit
+mgmtcli $ show frequency synchronization interfaces brief 
+-------------------------------------------------------------------------------
+Frequency Synchronization Interfaces Brief:
+------------------------------------------------------------------------------- 
+Flags:  > - Up                D - Down              S - Assigned for selection
+        d - SSM Disabled      x - Peer timed out    i - Init state
+        s - Output squelched, 
+Fl   Interfaces               QLrcv QLuse Pri QLsnd Output driven by        
+==== ======================== ===== ===== === ===== ========================Decode header message_type: 10 length=4
 
+mgmtcli $ 
 ```
 
 ## References
