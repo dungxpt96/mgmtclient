@@ -1,4 +1,4 @@
-CFLAGS = -Wall -O2 -g
+CFLAGS = -Wall -Werror -O2 -g
 LDFLAGS += -pthread -g -lreadline
 
 COMPAT = compat

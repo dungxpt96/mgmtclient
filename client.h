@@ -33,7 +33,7 @@
 extern const char *ctlname;
 
 /* commands.c */
-#define NEWLINE "<CR>"
+#define CMD_NEWLINE "<CR>"
 
 enum daemons
 {
@@ -84,19 +84,19 @@ int cmd_check_no_env(struct cmd_env *, void *);
 int cmd_check_env(struct cmd_env *, void *);
 int cmd_store_env(struct writer *,
     struct cmd_env *, void *);
-int cmd_store_env_and_pop(struct writer *,
+int cmd_store_env_and_pop(connection_t *conn, struct writer *,
     struct cmd_env *, void *);
-int cmd_store_env_value(struct writer *,
+int cmd_store_env_value(connection_t *conn, struct writer *,
     struct cmd_env *, void *);
-int cmd_store_env_value_and_pop(struct writer *,
+int cmd_store_env_value_and_pop(connection_t *conn, struct writer *,
     struct cmd_env *, void *);
-int cmd_store_env_value_and_pop2(struct writer *,
+int cmd_store_env_value_and_pop2(connection_t *conn, struct writer *,
     struct cmd_env *, void *);
-int cmd_store_env_value_and_pop3(struct writer *,
+int cmd_store_env_value_and_pop3(connection_t *conn, struct writer *,
     struct cmd_env *, void *);
-int cmd_store_something_env_value_and_pop2(const char *, struct cmd_env *,
+int cmd_store_something_env_value_and_pop2(connection_t *conn, const char *, struct cmd_env *,
     void *);
-int cmd_store_something_env_value(const char *, struct cmd_env *,
+int cmd_store_something_env_value(connection_t *conn, const char *, struct cmd_env *,
     void *);
 
 void cmd_restrict_ports(struct cmd_node *);

@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <ctype.h>
+#include <pthread.h>
 
 #include "message.h"
 
@@ -58,7 +59,7 @@ typedef ssize_t (*connection_send_callback)(connection_t *conn,
  * @return The number of bytes really received 
  */
 typedef ssize_t (*connection_recv_callback)(connection_t *conn,
-    const uint8_t *data, size_t length, void *user_data);
+    uint8_t *data, size_t length, void *user_data);
 
 struct connection_t {
 	/* the Unix-domain socket to connect to daemon */

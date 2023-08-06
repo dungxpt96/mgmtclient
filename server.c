@@ -27,7 +27,6 @@ int main(void)
 
     while (is_running());
 
-exit:
     mgmt_server_stop();
 
     return 0;

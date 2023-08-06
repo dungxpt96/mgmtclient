@@ -17,6 +17,9 @@
  * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#define __STDC_WANT_LIB_EXT2__ 1  //Define you want TR 24731-2:2010 extensions
+#define _GNU_SOURCE
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>

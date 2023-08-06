@@ -61,7 +61,7 @@ static void _register_freq_sync_commands_show(struct cmd_node *root)
     /* show frequency synchronization interface */
 	commands_new(
 		root,
-		NEWLINE,
+		CMD_NEWLINE,
 		"Show frequency synchronization interface information",
 		cmd_check_env, cmd_show_freq_sync_interface_spec, "interface");
 
@@ -75,7 +75,7 @@ static void _register_freq_sync_commands_show(struct cmd_node *root)
 
     commands_new(
 		interfaces,
-		NEWLINE,
+		CMD_NEWLINE,
 		"Show frequency synchronization interface information",
 		NULL, cmd_show_freq_sync_interfaces_all, NULL);
 
@@ -88,7 +88,7 @@ static void _register_freq_sync_commands_show(struct cmd_node *root)
 
     commands_new(
 		interface_brief,
-		NEWLINE,
+		CMD_NEWLINE,
 		"Show brief interface information",
 		NULL, cmd_show_freq_sync_interfaces_brief, NULL);
 }

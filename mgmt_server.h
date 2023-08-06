@@ -17,6 +17,8 @@
 #ifndef _MGMT_SERVER_H
 #define _MGMT_SERVER_H
 
+int is_running(void);
+
 void mgmt_server_start();
 
 void mgmt_server_stop();

@@ -18,6 +18,8 @@
 #include "client.h"
 
 #include <string.h>
+#include <stdlib.h>
+
 /**
  * Tokenize the given line. We support quoted strings and escaped characters
  * with backslash.

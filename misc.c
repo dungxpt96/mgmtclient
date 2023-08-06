@@ -58,13 +58,15 @@ totag(const char *value)
 	free(result);
     result = NULL;
 	
-    if (!value)
+    if (!value) {
         return "none";
+	}
 	
     result = calloc(1, strlen(value) + 1);
 	
-    if (!result)
+    if (!result) {
         return "none";
+	}
 
 	for (i = 0; i < strlen(value); i++) {
 		switch (value[i]) {

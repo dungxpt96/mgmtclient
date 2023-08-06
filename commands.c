@@ -14,12 +14,17 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "client.h"
 #include <string.h>
+#include <stdlib.h>
 #include <sys/queue.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+
+#include "client.h"
+
+extern int
+contains(const char *list, const char *element);
 
 /**
  * An element of the environment (a key and a value).
@@ -61,7 +66,7 @@ struct cmd_env {
  * to validate the user input (or @c NULL if no function is needed) and a
  * function to execute when entering the node. Because we can enter a node just
  * by completing, the execution part should have no other effect than modifying
- * the environment, with the exception of execution on @c NEWLINE (which cannot
+ * the environment, with the exception of execution on @c CMD_NEWLINE (which cannot
  * happen when completing).
  */
 struct cmd_node {
@@ -200,7 +205,7 @@ commands_free(struct cmd_node *root)
 }
 
 /**
- * Return the current argument in the environment. This can be @c NEWLINE or
+ * Return the current argument in the environment. This can be @c CMD_NEWLINE or
  * @c NULL.
  *
  * @param env The environment.
@@ -212,7 +217,7 @@ cmdenv_arg(struct cmd_env *env)
 	if (env->argp < env->argc)
 		return env->argv[env->argp];
 	if (env->argp == env->argc)
-		return NEWLINE;
+		return CMD_NEWLINE;
 	return NULL;
 }
 
@@ -370,7 +375,6 @@ _commands_execute(connection_t *conn, struct writer *w,
 		.argv = argv,
 		.argp = 0
 	};
-	static int lockfd = -1;
 	cmdenv_push(&env, root);
 	if (!completion)
 		for (n = 0; n < argc; n++)
@@ -393,7 +397,7 @@ _commands_execute(connection_t *conn, struct writer *w,
 
 		struct cmd_node *candidate, *best = NULL;
 		const char *token = (env.argp < env.argc) ? env.argv[env.argp] :
-		    (env.argp == env.argc && !help && !complete) ? NEWLINE : NULL;
+		    (env.argp == env.argc && !help && !complete) ? CMD_NEWLINE : NULL;
 		if (token == NULL ||
 		    (completion && env.argp == env.argc - 1))
 			goto end;
@@ -491,7 +495,7 @@ end:
 					c = 0;
 					if (cword->hidden) continue;
 					if (cword->word == NULL) break;
-					if (!strcmp(cword->word, NEWLINE)) break;
+					if (!strcmp(cword->word, CMD_NEWLINE)) break;
 					if (strlen(cword->word) == n) break;
 					if (prefix[n] == '\0') prefix[n] = cword->word[n];
 					else if (prefix[n] != cword->word[n]) break;
@@ -504,7 +508,7 @@ end:
 			}
 			/* If the prefix is complete, add a space, otherwise,
 			 * just return it as is. */
-			if (!all && !help && !complete && strcmp(prefix, NEWLINE) &&
+			if (!all && !help && !complete && strcmp(prefix, CMD_NEWLINE) &&
 			    strlen(prefix) > 0 &&
 			    strlen(env.argv[env.argc-1]) < strlen(prefix)) {
 				TAILQ_FOREACH(cword, &words, next) {
@@ -531,7 +535,7 @@ end:
 						    cword->word ? cword->word : "WORD",
 						    cword->doc ?  cword->doc  : "...");
 					} else {
-						if (!cword->word || !strcmp(cword->word, NEWLINE))
+						if (!cword->word || !strcmp(cword->word, CMD_NEWLINE))
 							continue;
 						fprintf(stdout, "%s %s\n",
 						    cword->word ? cword->word : "WORD",
@@ -635,7 +639,7 @@ cmd_store_env(struct writer *w,
  * @return 1 if the key was stored
  */
 int
-cmd_store_env_and_pop(struct writer *w,
+cmd_store_env_and_pop(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *key)
 {
 	return (cmd_store_env(w, env, key) != -1 &&
@@ -653,41 +657,41 @@ cmd_store_env_and_pop(struct writer *w,
  * @return 1 if the key was stored
  */
 int
-cmd_store_env_value_and_pop(struct writer *w,
+cmd_store_env_value_and_pop(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *key)
 {
 	return (cmdenv_put(env, key, cmdenv_arg(env)) != -1 &&
 	    cmdenv_pop(env, 1) != -1);
 }
 int
-cmd_store_env_value_and_pop2(struct writer *w,
+cmd_store_env_value_and_pop2(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *key)
 {
 	return (cmdenv_put(env, key, cmdenv_arg(env)) != -1 &&
 	    cmdenv_pop(env, 2) != -1);
 }
 int
-cmd_store_env_value(struct writer *w,
+cmd_store_env_value(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *key)
 {
 	return (cmdenv_put(env, key, cmdenv_arg(env)) != -1);
 }
 int
-cmd_store_env_value_and_pop3(struct writer *w,
+cmd_store_env_value_and_pop3(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *key)
 {
 	return (cmdenv_put(env, key, cmdenv_arg(env)) != -1 &&
 	    cmdenv_pop(env, 3) != -1);
 }
 int
-cmd_store_something_env_value_and_pop2(const char *what,
+cmd_store_something_env_value_and_pop2(connection_t *conn, const char *what,
     struct cmd_env *env, void *value)
 {
 	return (cmdenv_put(env, what, value) != -1 &&
 	    cmdenv_pop(env, 2) != -1);
 }
 int
-cmd_store_something_env_value(const char *what,
+cmd_store_something_env_value(connection_t *conn, const char *what,
     struct cmd_env *env, void *value)
 {
 	return (cmdenv_put(env, what, value) != -1);

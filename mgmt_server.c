@@ -17,12 +17,15 @@
 #include <sys/prctl.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <unistd.h>
 #include <signal.h>
 
 #include "mgmt_server.h"
 #include "lib/connection.h"
+#include "lib/ctrl.h"
+#include "daemon/freqsync/freqsync_message.h"
 
 #define UNUSED(var) (void)(var)
 
@@ -116,8 +119,6 @@ static void test_reply(connection_t *conn, int message_type, uint16_t len)
     struct hmsg_header header;
     uint16_t size;
     uint8_t *pnt;
-    int ret;
-    int rc;
 
     pnt = conn->buf_out;
     size = MSG_HEADER_SIZE;
@@ -185,7 +186,7 @@ mgmt_server_run(void *data)
                                 mgmt_server_handler_client, client_conn) != 0) {
                 fprintf(stderr, "pthread_create error\n");
                 close(clientfd);
-                return -1;
+                return NULL;
             }
     }
 

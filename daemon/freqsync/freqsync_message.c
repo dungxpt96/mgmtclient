@@ -74,16 +74,16 @@ freqsync_message_register(connection_t *conn)
 
 void freqsync_message_send_interfaces_brief(connection_t *conn)
 {
-    uint16_t size;
-    uint8_t *pnt;
     uint16_t nbytes = 0;
-
-    pnt = conn->buf_out + MSG_HEADER_SIZE;
-    size = conn->len_out - MSG_HEADER_SIZE;
 
     /*
         TODO: Encode data buffer if have
         struct messageXXX msg;
+        uint16_t size;
+        uint8_t *pnt;
+
+        pnt = conn->buf_out + MSG_HEADER_SIZE;
+        size = conn->len_out - MSG_HEADER_SIZE;
 
         nbytes = encode_something (&pnt, &size, msg);
         if (nbytes < 0)

@@ -19,6 +19,7 @@
 #include <limits.h>
 
 #include "daemon/freqsync/configure/freqsync_configure.h"
+#include "lib/connection.h"
 
 extern char hostname[256];
 
@@ -44,7 +45,7 @@ static void register_daemon_commands_configure(struct cmd_node *root)
 }
 
 static int
-cmd_configure_hostname(struct writer *w,
+cmd_configure_hostname(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 	strcpy(hostname, cmdenv_get(env, "hostname"));
@@ -68,7 +69,7 @@ static void _register_configure_hostname(struct cmd_node *root)
 
 	commands_new(
 		hostname,
-		NEWLINE,
+		CMD_NEWLINE,
 		"Hostname of the host",
 		cmd_check_env, cmd_configure_hostname, "hostname");
 }

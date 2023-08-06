@@ -31,7 +31,6 @@ message_encode_header (uint8_t **pnt, uint16_t *size,
   uint8_t *sp = *pnt;
 
   if (*size < MSG_HEADER_SIZE) {
-    printf("Packet too short!!!\n");
     return -1;
   }
 
@@ -46,7 +45,6 @@ message_decode_header (uint8_t **pnt, uint16_t *size,
                    struct hmsg_header *header)
 {
   if (*size < MSG_HEADER_SIZE) {
-    printf("Packet too short!!!\n");
     return -1;
   }
 
@@ -56,6 +54,7 @@ message_decode_header (uint8_t **pnt, uint16_t *size,
   return MSG_HEADER_SIZE;
 }
 
+void
 message_set_handler(connection_t *conn, int message_type,
                         CONN_PARSER parser,
                         CONN_CALLBACK callback)
@@ -83,8 +82,6 @@ void message_send(connection_t *conn, int message_type, uint16_t len)
     struct hmsg_header header;
     uint16_t size;
     uint8_t *pnt;
-    int ret;
-    int rc;
 
     pnt = conn->buf_out;
     size = MSG_HEADER_SIZE;
@@ -106,13 +103,10 @@ void message_send(connection_t *conn, int message_type, uint16_t len)
 void message_recv(connection_t *conn)
 {
     struct hmsg_header header;
-    int rc;
 
-    rc = connection_needs(conn, MESSAGE_MAX_LEN);
+    connection_needs(conn, MESSAGE_MAX_LEN);
     
     message_decode_header (&conn->pnt_in, &conn->size_in, &header);
-
-    printf("Decode header message_type: %d length=%d\n", header.type, header.length);
 
     if (conn->callback[header.type] != NULL) {
         (*conn->parser[header.type])(&conn->pnt_in, &conn->size_in, &header,

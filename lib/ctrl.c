@@ -16,7 +16,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -26,6 +25,7 @@
 #include <string.h>
 
 #include "ctrl.h"
+
 
 /**
  * Create a new listening Unix socket for control protocol.
@@ -40,8 +40,6 @@ ctl_create(const char *name)
 	struct sockaddr_un su;
 	int rc;
 
-	log_debug("control", "create control socket %s", name);
-
     ctl_cleanup(name);
 
 	if ((s = socket(PF_UNIX, SOCK_STREAM, 0)) == -1)
@@ -53,17 +51,14 @@ ctl_create(const char *name)
 	}
 
 	su.sun_family = AF_UNIX;
-	strlcpy(su.sun_path, name, sizeof(su.sun_path));
+	strcpy(su.sun_path, name);
 	if (bind(s, (struct sockaddr *)&su, sizeof(struct sockaddr_un)) == -1) {
 		rc = errno; close(s); errno = rc;
 		return -1;
 	}
 
-	log_debug("control", "listen to control socket %s", name);
-
 	if (listen(s, 10) == -1) {
 		rc = errno; close(s); errno = rc;
-		log_debug("control", "cannot listen to control socket %s", name);
 		return -1;
 	}
 
@@ -83,31 +78,27 @@ ctl_connect(const char *name)
 	struct sockaddr_un su;
 	int rc;
 
-	log_debug("control", "connect to control socket %s", name);
-
 	if ((s = socket(PF_UNIX, SOCK_STREAM, 0)) == -1)
 		return -1;
 
 	su.sun_family = AF_UNIX;
-	strlcpy(su.sun_path, name, sizeof(su.sun_path));
+	strcpy(su.sun_path, name);
 	if (connect(s, (struct sockaddr *)&su, sizeof(struct sockaddr_un)) == -1) {
 		rc = errno; close(s); errno = rc;
-		log_warn("control", "unable to connect to socket %s", name);
         return -1;
 	}
 	return s;
 }
 
+/**
+ * Remove the control Unix socket.
+ *
+ * @param fd The file descriptor of the Unix socket.
+ */
 int
 ctl_accept(int fd)
 {
-    int s;
-
-	if ((s = accept(fd, NULL, NULL)) == -1) {
-		log_warn("event", "unable to accept connection from socket");
-	}
-
-    return s;
+    return accept(fd, NULL, NULL);
 }
 
 /**
@@ -118,7 +109,5 @@ ctl_accept(int fd)
 void
 ctl_cleanup(const char *name)
 {
-	log_debug("control", "cleanup control socket");
-	if (unlink(name) == -1)
-		log_warn("control", "unable to unlink %s", name);
+	unlink(name);
 }

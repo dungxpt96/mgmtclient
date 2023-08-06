@@ -51,6 +51,7 @@ int
 message_decode_header (uint8_t **pnt, uint16_t *size,
                    struct hmsg_header *header);
 
+void
 message_set_handler(struct connection_t *conn, int message_type,
                         CONN_PARSER parser,
                         CONN_CALLBACK callback);

@@ -70,11 +70,11 @@ connection_sync_send(connection_t *connect,
 
 static ssize_t
 connection_sync_recv(connection_t *connect,
-    const uint8_t *data, size_t length, void *user_data)
+    uint8_t *data, size_t length, void *user_data)
 {
 	struct connection_socker_t *socket = user_data;
-    int bytes;
-    int pos;
+    size_t bytes;
+    size_t pos;
     int count;
     fd_set readfds, writefds;
     struct timeval timeout;

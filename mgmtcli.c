@@ -49,7 +49,7 @@ extern const char	*__progname;
 /* Global for completion */
 static struct cmd_node *root = NULL;
 const char *ctlname = NULL;
-char hostname[256] = "mgmtcli";
+char hostname[128] = "mgmtclient";
 
 static int
 is_privileged()
@@ -84,7 +84,7 @@ static int must_exit = 0;
  * Exit the interpreter.
  */
 static int
-cmd_exit(struct mgmtctl_conn_t *conn, struct writer *w,
+cmd_exit(connection_t *conn, struct writer *w,
     struct cmd_env *env, void *arg)
 {
 	log_info("mgmtctl", "quit mgmtcli");
@@ -217,28 +217,14 @@ register_commands()
 
 	commands_new(
 		commands_new(root, "exit", "Exit interpreter", NULL, NULL, NULL),
-		NEWLINE, "Exit interpreter", NULL, cmd_exit, NULL);
+		CMD_NEWLINE, "Exit interpreter", NULL, cmd_exit, NULL);
 	return root;
-}
-
-struct input {
-	TAILQ_ENTRY(input) next;
-	char *name;
-};
-TAILQ_HEAD(inputs, input);
-static int
-filter(const struct dirent *dir)
-{
-	if (strlen(dir->d_name) < 5) return 0;
-	if (strcmp(dir->d_name + strlen(dir->d_name) - 5, ".conf")) return 0;
-	return 1;
 }
 
 int
 main(int argc, char *argv[])
 {
 	int rc = EXIT_FAILURE;
-	int n;
 	const char *fmt = "plain";
 	connection_t *client_conn = NULL;
 
@@ -249,6 +235,8 @@ main(int argc, char *argv[])
 
 	/* Register commands */
 	root = register_commands();
+
+	ctlname = connection_get_default_transport();
 
 	client_conn = connection_create();
 
@@ -274,8 +262,8 @@ main(int argc, char *argv[])
 	} while (!must_exit && line != NULL);
 	rc = EXIT_SUCCESS;
 
-end:
-	if (root) commands_free(root);
+	if (root)
+		commands_free(root);
 	connection_release(client_conn);
 	return rc;
 }

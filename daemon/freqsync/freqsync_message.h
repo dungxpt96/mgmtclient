@@ -23,4 +23,10 @@
 
 void freqsync_message_register(connection_t *conn);
 
+/* --------------------------------------------------------------------*/
+/* ------------------- Handle specific message ------------------------*/
+/* --------------------------------------------------------------------*/
+
+void freqsync_message_send_interfaces_brief(connection_t *conn);
+
 #endif /* _DAEMON_FREQSYNC_MESSAGE_H */

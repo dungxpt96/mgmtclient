@@ -68,7 +68,7 @@ static void _register_opt1_ql_DNU(struct cmd_node *root)
 		"This signal should not be used for synchronization",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"This signal should not be used for synchronization",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_DNU, "interface");
 
@@ -88,7 +88,7 @@ static void _register_opt1_ql_EEC1(struct cmd_node *root)
 		"ITU-T Option 1: Ethernet equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Ethernet equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_EEC1, "interface");
 
@@ -108,7 +108,7 @@ static void _register_opt1_ql_PRC(struct cmd_node *root)
 		"ITU-T Option 1: Primary reference clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Primary reference clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_PRC, "interface");
 
@@ -128,7 +128,7 @@ static void _register_opt1_ql_PRTC(struct cmd_node *root)
 		"ITU-T Option 1: Primary reference timing clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Primary reference timing clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_PRTC, "interface");
 
@@ -148,7 +148,7 @@ static void _register_opt1_ql_SEC(struct cmd_node *root)
 		"ITU-T Option 1: SONET equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: SONET equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_SEC, "interface");
 
@@ -168,7 +168,7 @@ static void _register_opt1_ql_SSUA(struct cmd_node *root)
 		"ITU-T Option 1: Type I or V slave clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Type I or V slave clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_SSUA, "interface");
 
@@ -188,7 +188,7 @@ static void _register_opt1_ql_SSUB(struct cmd_node *root)
 		"ITU-T Option 1: Type IV slave clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Type IV slave clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_SSUB, "interface");
 
@@ -208,7 +208,7 @@ static void _register_opt1_ql_eEEC(struct cmd_node *root)
 		"ITU-T Option 1: Enhanced ethernet equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Enhanced ethernet equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_eEEC, "interface");
 
@@ -228,7 +228,7 @@ static void _register_opt1_ql_ePRC(struct cmd_node *root)
 		"ITU-T Option 1: Enhanced primary reference clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Enhanced primary reference clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_ePRC, "interface");
 
@@ -248,14 +248,14 @@ static void _register_opt1_ql_ePRTC(struct cmd_node *root)
 		"ITU-T Option 1: Enhanced primary reference timing clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 1: Enhanced primary reference timing clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt1_ePRTC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_DUS(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_DUS(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -268,14 +268,14 @@ static void _register_opt2gen1_ql_DUS(struct cmd_node *root)
 		"This signal should not be used for synchronization",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"This signal should not be used for synchronization",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_DUS, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_EEC2(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_EEC2(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -288,14 +288,14 @@ static void _register_opt2gen1_ql_EEC2(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Ethernet equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Ethernet equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_EEC2, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_PRS(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_PRS(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -308,14 +308,14 @@ static void _register_opt2gen1_ql_PRS(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Primary reference source",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Primary reference source",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_PRS, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_PRTC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_PRTC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -328,14 +328,14 @@ static void _register_opt2gen1_ql_PRTC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Primary reference timing clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Primary reference timing clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_PRTC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_RES(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_RES(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -348,14 +348,14 @@ static void _register_opt2gen1_ql_RES(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Reserved for network synchronization use",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Reserved for network synchronization use",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_RES, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_SMC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_SMC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -368,14 +368,14 @@ static void _register_opt2gen1_ql_SMC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: SONET clock self timed",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: SONET clock self timed",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_SMC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_ST2(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_ST2(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -388,14 +388,14 @@ static void _register_opt2gen1_ql_ST2(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Stratum 2",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Stratum 2",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_ST2, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_ST3(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_ST3(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -408,14 +408,14 @@ static void _register_opt2gen1_ql_ST3(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Stratum 3",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Stratum 3",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_ST3, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_STU(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_STU(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -428,14 +428,14 @@ static void _register_opt2gen1_ql_STU(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Synchronized - traceability unknown",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Synchronized - traceability unknown",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_STU, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_eEEC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_eEEC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -448,14 +448,14 @@ static void _register_opt2gen1_ql_eEEC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Enhanced ethernet equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Enhanced ethernet equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_eEEC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_ePRC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_ePRC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -468,14 +468,14 @@ static void _register_opt2gen1_ql_ePRC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Enhanced primary reference clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Enhanced primary reference clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_ePRC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen1_ePRTC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen1_ePRTC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -488,14 +488,14 @@ static void _register_opt2gen1_ql_ePRTC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 1: Enhanced primary reference timing clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 1: Enhanced primary reference timing clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen1_ePRTC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_DUS(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_DUS(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -508,14 +508,14 @@ static void _register_opt2gen2_ql_DUS(struct cmd_node *root)
 		"This signal should not be used for synchronization",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"This signal should not be used for synchronization",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_DUS, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_EEC2(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_EEC2(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -528,14 +528,14 @@ static void _register_opt2gen2_ql_EEC2(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Ethernet equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Ethernet equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_EEC2, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_PROV(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_PROV(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -548,14 +548,14 @@ static void _register_opt2gen2_ql_PROV(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Provisionable by the network operator.",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Provisionable by the network operator.",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_PROV, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_PRS(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_PRS(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -568,14 +568,14 @@ static void _register_opt2gen2_ql_PRS(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Primary reference source",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Primary reference source",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_PRS, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_PRTC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_PRTC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -588,14 +588,14 @@ static void _register_opt2gen2_ql_PRTC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Primary reference timing clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Primary reference timing clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_PRTC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_SMC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_SMC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -608,14 +608,14 @@ static void _register_opt2gen2_ql_SMC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: SONET clock self timed",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: SONET clock self timed",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_SMC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_ST2(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_ST2(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -628,14 +628,14 @@ static void _register_opt2gen2_ql_ST2(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Stratum 2",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Stratum 2",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_ST2, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_ST3(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_ST3(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -648,14 +648,14 @@ static void _register_opt2gen2_ql_ST3(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Stratum 3",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Stratum 3",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_ST3, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_ST3E(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_ST3E(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -668,14 +668,14 @@ static void _register_opt2gen2_ql_ST3E(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Stratum 3E",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Stratum 3E",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_ST3E, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_STU(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_STU(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -688,14 +688,14 @@ static void _register_opt2gen2_ql_STU(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Synchronized - traceability unknown",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Synchronized - traceability unknown",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_STU, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_TNC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_TNC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -708,14 +708,14 @@ static void _register_opt2gen2_ql_TNC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Transit node clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Transit node clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_TNC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_eEEC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_eEEC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -728,14 +728,14 @@ static void _register_opt2gen2_ql_eEEC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Enhanced ethernet equipment clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Enhanced ethernet equipment clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_eEEC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -748,14 +748,14 @@ static void _register_opt2gen2_ql_ePRC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Enhanced primary reference clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Enhanced primary reference clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRC, "interface");
 
 }
 
 static int
-cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRTC(struct writer *w,
+cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRTC(connection_t *conn, struct writer *w, 
 	struct cmd_env *env, void *arg)
 {
 	return 1;
@@ -768,7 +768,7 @@ static void _register_opt2gen2_ql_ePRTC(struct cmd_node *root)
 		"ITU-T Option 2, Generation 2: Enhanced primary reference timing clock",
 		cmd_check_env, NULL, "interface");
 	commands_new(ql,
-		NEWLINE,
+		CMD_NEWLINE,
 		"ITU-T Option 2, Generation 2: Enhanced primary reference timing clock",
 		cmd_check_env, cmd_configure_ifp_freq_sync_ql_opt2gen2_ePRTC, "interface");
 
@@ -855,7 +855,7 @@ static void _register_freq_sync_quality_opt_commands_configure(struct cmd_node *
 	{
 		commands_new(
 			opt1,
-			NEWLINE,
+			CMD_NEWLINE,
 			"ITU-T QL option 1",
 			cmd_check_no_env, cmd_configure_freq_sync_quality_opt1, "interface");
 	}
@@ -883,7 +883,7 @@ static void _register_freq_sync_quality_opt_commands_configure(struct cmd_node *
 	{
 		commands_new(
 			opt2gen1,
-			NEWLINE,
+			CMD_NEWLINE,
 			"ITU-T QL option 2",
 			cmd_check_no_env, cmd_configure_freq_sync_quality_opt2gen1, "interface");
 	}
@@ -898,7 +898,7 @@ static void _register_freq_sync_quality_opt_commands_configure(struct cmd_node *
 	{
 		commands_new(
 			opt2gen2,
-			NEWLINE,
+			CMD_NEWLINE,
 			"ITU-T QL option 2, generation 2",
 			cmd_check_no_env, cmd_configure_freq_sync_quality_opt2gen2, "interface");
 	}
@@ -945,7 +945,7 @@ static void _register_freq_sync_commands_configure(struct cmd_node *root)
 {
 	commands_new(
 		root,
-		NEWLINE,
+		CMD_NEWLINE,
 		"Frequency Synchronization configuration",
 		NULL, cmd_configure_freq_sync, NULL);
 
