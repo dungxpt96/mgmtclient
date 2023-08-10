@@ -34,8 +34,8 @@ message_encode_header (uint8_t **pnt, uint16_t *size,
     return -1;
   }
 
-  TLV_ENCODE_PUTW (header->type);
-  TLV_ENCODE_PUTW (header->length);
+  TLV_ENCODE_SHORT (header->type);
+  TLV_ENCODE_SHORT (header->length);
 
   return *pnt - sp;
 }
@@ -48,8 +48,8 @@ message_decode_header (uint8_t **pnt, uint16_t *size,
     return -1;
   }
 
-  TLV_DECODE_GETW (header->type);
-  TLV_DECODE_GETW (header->length);
+  TLV_DECODE_SHORT (header->type);
+  TLV_DECODE_SHORT (header->length);
 
   return MSG_HEADER_SIZE;
 }
